@@ -5,6 +5,7 @@
       <v-col cols="12" md="6" style="text-align: right">
         <v-btn @click="download()">Загрузить</v-btn>
       </v-col>
+
       <v-col cols="12" md="6">
         <v-dialog v-model="dialogAddPost" persistent max-width="600px">
           <v-card>
@@ -25,7 +26,9 @@
               ></v-textarea
             ></v-card-text>
             <v-card-actions>
-              <v-btn @click="addNewPost()"> Добавить </v-btn>
+              <v-btn style="margin-right: 20px" @click="addNewPost()">
+                Добавить
+              </v-btn>
               <v-btn @click="dialogAddPost = false"> Отменить </v-btn>
             </v-card-actions>
           </v-card>
@@ -38,7 +41,7 @@
       <v-col cols="12" style="margin-left: 40%">
         <postCard
           v-for="(post, i) in paginatedData"
-          :id="i"
+          :id="post.id"
           :key="i"
           :datapost="post"
           style="margin-bottom: 100px"
@@ -76,6 +79,14 @@ export default {
       pageNumber: 1,
     }
   },
+  computed: {
+    paginatedData() {
+      const start =
+        this.pageNumber * this.paginationLength - this.paginationLength
+      const end = start + this.paginationLength
+      return this.$store.state.storePost.arrayPosts.slice(start, end)
+    },
+  },
   async mounted() {
     await this.validLocalStorage()
     this.isLoading = true
@@ -109,18 +120,14 @@ export default {
       this.saveLocalStore()
     },
     addNewPost() {
-      const obj = { title: this.title, body: this.body }
+      const obj = {
+        title: this.title,
+        body: this.body,
+        id: this.$store.state.storePost.arrayPosts.length,
+      }
       this.$store.commit('storePost/addNewPost', obj)
       this.saveLocalStore()
       this.dialogAddPost = false
-    },
-  },
-  computed: {
-    paginatedData() {
-      const start =
-        this.pageNumber * this.paginationLength - this.paginationLength
-      const end = start + this.paginationLength
-      return this.$store.state.storePost.arrayPosts.slice(start, end)
     },
   },
 }

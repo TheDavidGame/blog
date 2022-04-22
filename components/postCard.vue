@@ -2,7 +2,7 @@
   <div>
     <v-card class="mx-auto" max-width="344" height="220">
       <v-card-text>
-        <div style="font-size: 18px">{{ datapost.title }}</div>
+        <div style="font-size: 18px" class="text">{{ datapost.title }}</div>
         <div class="text--primary text">
           {{ datapost.body }}
         </div>
@@ -42,7 +42,9 @@
                   ></v-textarea
                 ></v-card-text>
                 <v-card-actions>
-                  <v-btn @click="confirmEditPost()"> Изменить </v-btn>
+                  <v-btn style="margin-right: 20px" @click="confirmEditPost()">
+                    Изменить
+                  </v-btn>
                   <v-btn @click="dialogEditPost = false"> Отменить </v-btn>
                 </v-card-actions>
               </v-card>
@@ -56,7 +58,9 @@
               Вы точно хотите удалить ?
             </v-card-title>
             <v-card-actions>
-              <v-btn @click="deletePost()"> Да </v-btn>
+              <v-btn style="margin-right: 20px" @click="deletePost()">
+                Да
+              </v-btn>
               <v-btn @click="confirmDelete = false"> Нет </v-btn>
             </v-card-actions>
           </v-card>
