@@ -113,7 +113,7 @@ export default {
     },
     async download() {
       await axios
-        .get('http://jsonplaceholder.typicode.com/posts')
+        .get('https://jsonplaceholder.typicode.com/posts')
         .then((res) => {
           this.$store.commit('storePost/savePosts', res.data)
         })
